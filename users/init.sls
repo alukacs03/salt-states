@@ -12,6 +12,7 @@ admin:
   user.present:
     - home: {{ args['home'] }}
     - shell: {{ args['shell'] }}
+    - allow_uid_change: True
     - uid: {{ args['uid'] }}
     - gid: {{ args['gid'] }}
 {% if 'password' in args %}
@@ -27,12 +28,12 @@ admin:
     - require:
       - group: {{ user }}
 
-{% if 'key.pub' in args and args['key.pub'] == True %}
+{% if 'key.pub' in args %}
 {{ user }}_key.pub:
-  ssh_auth:
-    - present
+  ssh_auth.manage:
     - user: {{ user }}
-    - source: salt://users/{{ user }}/keys/key.pub
+    - ssh_keys:                                   
+      - {{ args['key.pub'] }}
 {% endif %}
 
 {% endfor %}
