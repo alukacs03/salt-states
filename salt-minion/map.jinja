@@ -1,0 +1,2 @@
+{% import_yaml "salt-minion/defaults.yaml" as defaults %}
+{% set salt_minion = salt['pillar.get']('salt-minion', default=defaults['salt-minion'], merge=True) %}
