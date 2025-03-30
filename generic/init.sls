@@ -1,5 +1,8 @@
 {% from "generic/map.jinja" import generic with context %}
 
+sshd:
+  service.running: []
+
 # prohibit root login
 set_root_access:
   file.replace:
@@ -7,7 +10,8 @@ set_root_access:
     - pattern: '^#?PermitRootLogin.*'
     - repl: 'PermitRootLogin no'
     - append_if_not_found: True
-
+    - watch_in:
+        service: sshd
 # install sudo
 sudo:
   pkg.installed: []
