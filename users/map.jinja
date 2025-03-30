@@ -1,0 +1,2 @@
+{% import_yaml "users/defaults.yaml" as defaults %}
+{% set users = salt['pillar.get']('users', default=defaults['users'], merge=True) %}
